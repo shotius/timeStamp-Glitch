@@ -29,11 +29,23 @@ var listener = app.listen(process.env.PORT, function() {
 });
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
+  var regDateFormat = /^\d{4}\-\d{1,2}\-\d{1,2}$/
+  var regDigitsOnly = /^\d+$/
+  var date = req.params["date_string"]
+  
   // if date_string is empty we return time now
-  if (req.params === {}) {
-    var d = new Date();
-  } else {
-    var d = "error";
+  if ( date === undefined ) {
+    var d = new Date();    
+  } else if(regDateFormat.test(date)) {
+    // else if string is date format parse it in a date format
+    var d = new Date(req.params.date_string); 
+  } else if(regDigitsOnly.test(date)){
+    // else if the string consists only from integers print it
+    
   }
-  res.json({ data: req.params["date_string"].length == 0});
+  
+  
+  
+  res.json({ unix: d.getTime(),
+            utc: d});
 });
