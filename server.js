@@ -29,9 +29,12 @@ var listener = app.listen(process.env.PORT, function() {
 });
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
+  // save req.param in a varible
+  var date = req.params["date_string"]
+  
+  // regex expressions
   var regDateFormat = /^\d{4}\-\d{1,2}\-\d{1,2}$/
   var regDigitsOnly = /^\d+$/
-  var date = req.params["date_string"]
   
   // if date_string is empty we return time now
   if ( date === undefined ) {
@@ -40,16 +43,16 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
     // else if string is date format parse it in a date format
     var d = new Date(req.params.date_string); 
   } else if(regDigitsOnly.test(date)){
-    // else if the string consists only from integers print it
+    // else if the string consists only from digits, treat it as miliseconds
+    // from 1970 and convert it to date
     date = parseInt(date)
-    var d = new Date(req.params.date_string)
+    var d = new Date(date)
+  } else {
+    // in this case date specified 
+    res.json({"error" : "Invalid Date" })
   }
   
-   
-  var dat = new Date(1292112000000)
-  console.log(dat)
-  
-  
-  res.json({ unix: d,
+  // if code cames her that meand url were specified correctly
+  res.json({ unix: d.getTime(),
             utc: d});
 });
