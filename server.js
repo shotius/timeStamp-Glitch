@@ -30,10 +30,10 @@ var listener = app.listen(process.env.PORT, function() {
 
 app.get("/api/timestamp/:date_string?", (req, res) => {
   // if date_string is empty we return time now
-  if (!("date_string" in req.params)) {
+  if (req.params === {}) {
     var d = new Date();
   } else {
     var d = "error";
   }
-  res.json({ date: req.params});
+  res.json({ data: req.params["date_string"] == ''});
 });
