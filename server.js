@@ -41,11 +41,15 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
     var d = new Date(req.params.date_string); 
   } else if(regDigitsOnly.test(date)){
     // else if the string consists only from integers print it
-    
+    date = parseInt(date)
+    var d = new Date(req.params.date_string)
   }
   
+   
+  var dat = new Date(1292112000000)
+  console.log(dat)
   
   
-  res.json({ unix: d.getTime(),
+  res.json({ unix: d,
             utc: d});
 });
