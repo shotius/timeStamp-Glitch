@@ -35,5 +35,5 @@ app.get("/api/timestamp/:date_string?", (req, res) => {
   } else {
     var d = "error";
   }
-  res.json({ data: req.params["date_string"] == ''});
+  res.json({ data: req.params["date_string"].length == 0});
 });
